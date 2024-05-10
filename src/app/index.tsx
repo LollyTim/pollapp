@@ -1,13 +1,17 @@
 import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 
 const polls = [{ id: 1 }, { id: 2 }, { id: 3 }]
 export default function HomeScreen() {
     return (
         <>
-            <Stack.Screen options={{ title: "Polls" }} />
+            <Stack.Screen options={{
+                title: "Polls",
+                headerRight: () => <Link href="/polls/new"><AntDesign name="plus" size={24} color="black" /></Link>
+            }} />
             <FlatList
                 contentContainerStyle={styles.container}
                 data={polls}
