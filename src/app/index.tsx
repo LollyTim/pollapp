@@ -5,10 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
-
-// const polls = [{ id: 1 }, { id: 2 }, { id: 3 }]
 export default function HomeScreen() {
-    const [polls, setPolls] = useState([])
+    const [polls, setPolls] = useState([]);
 
     useEffect(() => {
         const fetchPolls = async () => {
@@ -24,12 +22,13 @@ export default function HomeScreen() {
             setPolls(data)
         }
         fetchPolls()
-    }, [])
+    }, [setPolls]);
     return (
         <>
             <Stack.Screen options={{
                 title: "Polls",
-                headerRight: () => <Link href="/polls/new"><AntDesign name="plus" size={24} color="black" /></Link>
+                headerRight: () => (<Link href="/polls/new"><AntDesign name="plus" size={24} color="gray" /></Link>),
+                headerLeft: () => (<Link href="/profile"><AntDesign name="user" size={24} color="gray" /></Link>)
             }} />
             <FlatList
                 contentContainerStyle={styles.container}

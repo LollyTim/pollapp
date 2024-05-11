@@ -1,13 +1,19 @@
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import { Stack } from 'expo-router'
+import { Redirect, Stack } from 'expo-router'
 import { Feather } from '@expo/vector-icons';
+import { useAuth } from '../../providers/AuthProvider';
 
 const CreatePoll = () => {
 
     const [question, setQuestion] = useState('')
     const [options, setOptions] = useState(["", ""])
+    const { session, user } = useAuth();
+
     const createpoll = () => { console.warn("Create") }
+    if (!user) {
+        return <Redirect href={"/login"} />
+    }
 
     return (
         <View style={styles.container}>
@@ -18,7 +24,7 @@ const CreatePoll = () => {
             <Text style={styles.label}>Options</Text>
 
             {options.map((option, index) => (
-                <View style={{ justifyContent: "center" }}>
+                <View key={index} style={{ justifyContent: "center" }}>
                     <TextInput value={option} onChangeText={(text) => {
                         const update = [...options];
                         update[index] = text;

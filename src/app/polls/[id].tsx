@@ -4,12 +4,12 @@ import { Stack, useLocalSearchParams } from 'expo-router'
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 
-const poll = {
-    question: "React Native VS Flutter?",
-    options: ["React Native FTM", "Flutter", "SwiftUI"]
-}
 
 const PollDetails = () => {
+    const poll = {
+        question: "React Native VS Flutter?",
+        options: ["React Native FTM", "Flutter", "SwiftUI"]
+    }
     const { id } = useLocalSearchParams<{ id: string }>()
 
     const [selected, setSelected] = useState("React Native FTM")
