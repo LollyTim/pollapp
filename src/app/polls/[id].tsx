@@ -1,21 +1,37 @@
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ActivityIndicator, Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { Feather } from '@expo/vector-icons';
 import { useState } from 'react';
+import { Poll } from '../../types/db';
+import { supabase } from '../../lib/supabase';
 
 
 const PollDetails = () => {
-    const poll = {
-        question: "React Native VS Flutter?",
-        options: ["React Native FTM", "Flutter", "SwiftUI"]
-    }
+
+    const [poll, setPoll] = useState<Poll>(null)
     const { id } = useLocalSearchParams<{ id: string }>()
 
     const [selected, setSelected] = useState("React Native FTM")
 
+    useEffect(() => {
+        const fetchPolls = async () => {
+            console.log("Fetching....")
+
+            let { data, error } = await supabase.from("polls").select("*").eq('id', Number.parseInt(id)).single();
+            if (error) {
+                Alert.alert("Error Fetching Data");
+            }
+            setPoll(data);
+        };
+        fetchPolls();
+    }, []);
+
     const vote = () => {
         console.warn("Vote: ", selected)
+    }
+    if (!poll) {
+        return <ActivityIndicator />
     }
     return (
         <View style={styles.container}>
